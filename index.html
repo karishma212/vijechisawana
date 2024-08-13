@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>विजेच्या जोडणीसाठी ना-हरकत स्वः घोषणापत्र</title>
+</head>
+<body>
+
+    <style>/* Base styles for mobile-first approach */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+        }
+        
+        .contain {
+            width: 100%;
+            max-width: 500px;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        
+        .header h2 {
+            margin: 0 0 20px;
+            text-align: center;
+            text-decoration: underline;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .container label {
+            margin-bottom: 5px;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 9px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        button {
+            width:100%;
+            padding: 10px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 8px 0;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+        
+        /* Styles for larger screens */
+        @media (min-width: 600px) {
+            .contain {
+                padding: 40px;
+            }
+        
+            .input-field {
+                margin-bottom: 20px;
+                padding: 14px 22px;
+                font-size: 16px;
+            }
+        }
+        
+        /* Styles for even larger screens, if needed */
+        @media (min-width: 900px) {
+            .contain {
+                max-width: 700px;
+            }
+        }
+        
+        /* Print styles */
+        @media print {
+            body, html {
+                width: 210mm;
+                height: 297mm;
+            }
+        
+            .contain {
+                width: 100%;
+                max-width: 100%;
+                padding: 20mm;
+                box-shadow: none;
+                border-radius: 0;
+                page-break-inside: avoid;
+            }
+        
+            .header h2 {
+                font-size: 24pt;
+            }
+        
+            .input-field {
+                font-size: 12pt;
+            }
+        
+            button {
+                display: none;
+            }
+        }
+        </style>
+    <div class="contain">
+        <div class="header">
+            <h2>विजेच्या जोडणीसाठी ना-हरकत स्वः घोषणापत्र</h2>
+        </div>
+        <div class="container">
+            <form id="submit-to-google-sheet" onsubmit="handleSubmit(event)">
+                <label><strong>मी :</strong></label>
+                <input type="text" id="me" name="me" class="input-field" required><br>
+                <label><strong>श्री. :</strong></label>
+                <input type="text" id="shree" name="shree" class="input-field" required><br>
+                <label><strong>वय :</strong></label>
+                <input type="text" id="age" name="age" class="input-field" required><br>
+                <label><strong>आधार कार्ड क्रमांक :</strong></label>
+                <input type="text" id="adhar" name="adhar" class="input-field" required><br>
+                <label><strong>व्यवसाय :</strong></label>
+                <input type="text" id="designation" name="designation" class="input-field" required><br>
+                <label><strong>मौजे :</strong></label>
+                <input type="text" id="address" name="address" class="input-field" required><br>
+                <label><strong>रा.</strong></label>
+                <input type="text" id="add" name="add" class="input-field" required><br>
+                <label><strong>ता.</strong></label>
+                <input type="text" id="tq" name="tq" class="input-field" required><br>
+                <label><strong>जि.</strong></label>
+                <input type="text" id="dist" name="dist" class="input-field" required><br>
+                <button type="submit">Submit</button>
+                
+            </form>
+        </div>
+    </div>
+    <script>
+        
+        function loadData() {
+            const urlParams = new URLSearchParams(window.location.search);
+
+            document.getElementById('me').value = urlParams.get('me') || '';
+            document.getElementById('shree').value = urlParams.get('shree') || '';
+            document.getElementById('age').value = urlParams.get('age') || '';
+            document.getElementById('aadhar').value = urlParams.get('aadhar') || '';
+            document.getElementById('designation').value = urlParams.get('designation') || '';
+            document.getElementById('address').value = urlParams.get('address') || '';
+            document.getElementById('add').value = urlParams.get('add') || '';
+            document.getElementById('tq').value = urlParams.get('tq') || '';
+            document.getElementById('dist').value = urlParams.get('dist') || '';
+        }
+
+    
+           function handleSubmit(event) {
+            event.preventDefault();
+            const scriptURL = 'https://script.google.com/macros/s/AKfycby0Gm_xtI1-MB_DkdzvkjEgjSLOPYWkx0I-bc7KdppHrRT3RvhBrZrd5zc-SxhS8Jc51A/exec';
+            const form = event.target;
+
+            fetch(scriptURL, {
+                method: 'POST',
+                body: new URLSearchParams(new FormData(form))
+            })
+            
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'Success') {
+                    alert('फॉर्म यशस्वीपणे सबमिट केला गेला आहे.');
+                    location.reload(); 
+                } else {
+                    alert('फॉर्म सबमिट करण्यात त्रुटी: ' + data.message);
+                }
+            });
+            // .catch(error => {
+            //     alert('फॉर्म सबमिट करण्यात त्रुटी: ' + error.message);
+            // });
+           }
+    </script>
+ 
+</body>
+</html>
